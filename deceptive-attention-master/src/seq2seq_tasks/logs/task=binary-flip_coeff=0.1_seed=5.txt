@@ -1,0 +1,5 @@
+Input vocab 1004 and output vocab 1004
+The model has 8,747,500 trainable parameters
+Epoch: 01 | Time: 8m 25s
+	Train Loss: 6.587 | Train Acc: 5.64         | Train Attn Mass: 4.73 | Train PPL: 725.429
+	 Val. Loss: 6.337 |   Val Acc: 5.81         |  Val. Attn Mass: 4.80 |  Val. PPL: 565.114

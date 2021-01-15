@@ -1,0 +1,35 @@
+Input vocab 1004 and output vocab 1004
+The model has 8,747,500 trainable parameters
+Input vocab 1004 and output vocab 1004
+The model has 8,747,500 trainable parameters
+Epoch: 01 | Time: 78m 15s
+	Train Loss: 6.609 | Train Acc: 5.62         | Train Attn Mass: 4.82 | Train PPL: 741.394
+	 Val. Loss: 6.508 |   Val Acc: 5.71         |  Val. Attn Mass: 4.95 |  Val. PPL: 670.676
+Epoch: 02 | Time: 6m 34s
+	Train Loss: 5.061 | Train Acc: 23.61         | Train Attn Mass: 22.10 | Train PPL: 157.750
+	 Val. Loss: 0.004 |   Val Acc: 99.98         |  Val. Attn Mass: 93.62 |  Val. PPL:   1.004
+Epoch: 03 | Time: 6m 22s
+	Train Loss: 0.016 | Train Acc: 99.91         | Train Attn Mass: 93.71 | Train PPL:   1.016
+	 Val. Loss: 0.000 |   Val Acc: 100.00         |  Val. Attn Mass: 94.03 |  Val. PPL:   1.000
+Epoch: 04 | Time: 6m 27s
+	Train Loss: 0.002 | Train Acc: 99.99         | Train Attn Mass: 93.78 | Train PPL:   1.002
+	 Val. Loss: 0.000 |   Val Acc: 100.00         |  Val. Attn Mass: 93.88 |  Val. PPL:   1.000
+Epoch: 05 | Time: 6m 35s
+	Train Loss: 0.017 | Train Acc: 99.91         | Train Attn Mass: 93.13 | Train PPL:   1.017
+	 Val. Loss: 0.000 |   Val Acc: 100.00         |  Val. Attn Mass: 93.44 |  Val. PPL:   1.000
+	 Test Loss: 0.000 |  Test Acc: 100.00         |  Test Attn Mass: 93.90 |  Test PPL:   1.000
+Input vocab 1004 and output vocab 1004
+cuda
+The model has 8,747,500 trainable parameters
+Epoch: 01 | Time: 9m 10s
+	Train Loss: 6.614 | Train Acc: 5.62         | Train Attn Mass: 4.83 | Train PPL: 745.785
+	 Val. Loss: 6.527 |   Val Acc: 5.72         |  Val. Attn Mass: 4.98 |  Val. PPL: 683.626
+Epoch: 02 | Time: 8m 46s
+	Train Loss: 4.746 | Train Acc: 28.71         | Train Attn Mass: 27.06 | Train PPL: 115.086
+	 Val. Loss: 0.002 |   Val Acc: 100.00         |  Val. Attn Mass: 93.90 |  Val. PPL:   1.002
+Epoch: 03 | Time: 8m 41s
+	Train Loss: 0.034 | Train Acc: 99.80         | Train Attn Mass: 93.59 | Train PPL:   1.034
+	 Val. Loss: 0.016 |   Val Acc: 99.91         |  Val. Attn Mass: 93.30 |  Val. PPL:   1.016
+Epoch: 04 | Time: 8m 24s
+	Train Loss: 0.008 | Train Acc: 99.96         | Train Attn Mass: 93.81 | Train PPL:   1.008
+	 Val. Loss: 0.000 |   Val Acc: 100.00         |  Val. Attn Mass: 93.73 |  Val. PPL:   1.000

@@ -1,0 +1,1 @@
+Input vocab 1004 and output vocab 1004

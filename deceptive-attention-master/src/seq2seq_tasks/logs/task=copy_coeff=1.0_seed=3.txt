@@ -1,0 +1,33 @@
+Input vocab 1004 and output vocab 1004
+The model has 8,747,500 trainable parameters
+Epoch: 01 | Time: 8m 45s
+	Train Loss: 6.578 | Train Acc: 5.64         | Train Attn Mass: 2.09 | Train PPL: 719.167
+	 Val. Loss: 6.206 |   Val Acc: 5.82         |  Val. Attn Mass: 1.52 |  Val. PPL: 495.909
+Epoch: 02 | Time: 8m 11s
+	Train Loss: 5.319 | Train Acc: 6.43         | Train Attn Mass: 0.88 | Train PPL: 204.117
+	 Val. Loss: 4.353 |   Val Acc: 7.83         |  Val. Attn Mass: 0.18 |  Val. PPL:  77.715
+Epoch: 03 | Time: 8m 13s
+	Train Loss: 3.701 | Train Acc: 14.14         | Train Attn Mass: 0.09 | Train PPL:  40.502
+	 Val. Loss: 2.443 |   Val Acc: 32.87         |  Val. Attn Mass: 0.05 |  Val. PPL:  11.508
+Epoch: 04 | Time: 8m 28s
+	Train Loss: 1.715 | Train Acc: 49.99         | Train Attn Mass: 0.05 | Train PPL:   5.556
+	 Val. Loss: 0.666 |   Val Acc: 86.88         |  Val. Attn Mass: 0.03 |  Val. PPL:   1.946
+Epoch: 05 | Time: 8m 15s
+	Train Loss: 0.486 | Train Acc: 88.12         | Train Attn Mass: 0.03 | Train PPL:   1.626
+	 Val. Loss: 0.128 |   Val Acc: 98.56         |  Val. Attn Mass: 0.03 |  Val. PPL:   1.136
+Epoch: 06 | Time: 8m 4s
+	Train Loss: 0.164 | Train Acc: 96.94         | Train Attn Mass: 0.02 | Train PPL:   1.178
+	 Val. Loss: 0.044 |   Val Acc: 99.74         |  Val. Attn Mass: 0.01 |  Val. PPL:   1.044
+Epoch: 07 | Time: 8m 9s
+	Train Loss: 0.083 | Train Acc: 98.71         | Train Attn Mass: 0.01 | Train PPL:   1.086
+	 Val. Loss: 0.027 |   Val Acc: 99.85         |  Val. Attn Mass: 0.01 |  Val. PPL:   1.028
+Epoch: 08 | Time: 8m 0s
+	Train Loss: 0.072 | Train Acc: 98.83         | Train Attn Mass: 0.01 | Train PPL:   1.074
+	 Val. Loss: 0.033 |   Val Acc: 99.83         |  Val. Attn Mass: 0.02 |  Val. PPL:   1.033
+Epoch: 09 | Time: 8m 10s
+	Train Loss: 0.046 | Train Acc: 99.26         | Train Attn Mass: 0.01 | Train PPL:   1.047
+	 Val. Loss: 0.014 |   Val Acc: 99.93         |  Val. Attn Mass: 0.01 |  Val. PPL:   1.014
+Epoch: 10 | Time: 8m 13s
+	Train Loss: 0.065 | Train Acc: 98.88         | Train Attn Mass: 0.01 | Train PPL:   1.067
+	 Val. Loss: 0.014 |   Val Acc: 99.91         |  Val. Attn Mass: 0.00 |  Val. PPL:   1.014
+	 Test Loss: 0.013 |  Test Acc: 99.94         |  Test Attn Mass: 0.01 |  Test PPL:   1.013
