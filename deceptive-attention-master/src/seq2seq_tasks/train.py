@@ -527,3 +527,22 @@ if TASK in ['en-hi', 'en-de']:
     for line in output_lines:
         fw.write(line.strip() + "\n")
     fw.close()
+
+def dump_attention_maps(dataset, filename):
+
+    fw = open(filename, 'w')
+
+    dataset = sorted(dataset, key=lambda x:x[0])
+    for _ , words, _ , _, _ in dataset:
+        words_t = torch.tensor([words]).type(type)
+        _ , attn = model(words_t)
+        attention = attn[0].detach().cpu().numpy()
+
+        for att in attention:
+            fw.write(str(att) + " ")
+        fw.write("\n")
+    fw.close()
+    return
+
+log.pr_bmagenta("dumping attention maps")
+dump_attention_maps(model, TASK + "model.txt.attn." + MODEL_TYPE)

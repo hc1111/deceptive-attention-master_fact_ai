@@ -82,7 +82,8 @@ parser.add_argument('--vocab-size', dest='vocab_size', type=int, default=20000,
         help='in case you clip vocab, specify the vocab size')
 
 params = vars(parser.parse_args())
-
+print('...')
+print(params)
 # useful constants
 SEED = params['seed']
 

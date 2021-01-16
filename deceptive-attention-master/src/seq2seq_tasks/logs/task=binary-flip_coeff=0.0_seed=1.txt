@@ -33,3 +33,6 @@ Epoch: 03 | Time: 8m 41s
 Epoch: 04 | Time: 8m 24s
 	Train Loss: 0.008 | Train Acc: 99.96         | Train Attn Mass: 93.81 | Train PPL:   1.008
 	 Val. Loss: 0.000 |   Val Acc: 100.00         |  Val. Attn Mass: 93.73 |  Val. PPL:   1.000
+Input vocab 1004 and output vocab 1004
+cuda
+The model has 8,747,500 trainable parameters
