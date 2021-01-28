@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """BERT finetuning runner."""
-
 from __future__ import absolute_import, division, print_function
 
 import argparse
@@ -23,9 +22,12 @@ import logging
 import os
 import random
 import sys
+
 sys.path.append(os.path.join(os.getcwd(), 'pytorch-pretrained-BERT'))
 
 import numpy as np
+import pandas as pd
+
 import torch
 from torch.utils.data import (DataLoader, RandomSampler, SequentialSampler,
                               TensorDataset)
@@ -190,7 +192,7 @@ class PronounProcessor(DataProcessor):
 
     def get_labels(self):
         """See base class."""
-        return ["0", "1"]
+        return ["1", "2","3", "4", "5"]
 
     def _create_examples(self, lines, block_lines, set_type):
         """Creates examples for the training and dev sets."""
@@ -198,11 +200,17 @@ class PronounProcessor(DataProcessor):
         for (i, line) in enumerate(lines):
             guid = "%s-%s" % (set_type, i)
             label_text = line.split('\t', 1)
-            label = label_text[0]
-            text = label_text[1]
-            block = block_lines[i]
-            examples.append(
-                InputExample(guid=guid, text_a=text, text_b=None, label=label, block=block))
+            if len(label_text)>1:
+                # print('index')
+                # print(i)
+                # print(len(block_lines))
+                label = label_text[0]
+                text = label_text[1]
+                block = block_lines[i]
+                examples.append(
+                    InputExample(guid=guid, text_a=text, text_b=None, label=label, block=block))
+
+                # print(block_lines)
         return examples
 
 def convert_examples_to_features(examples, label_list, max_seq_length,
@@ -217,14 +225,27 @@ def convert_examples_to_features(examples, label_list, max_seq_length,
             logger.info("Writing example %d of %d" % (ex_index, len(examples)))
 
         tokens_a = tokenizer.tokenize(example.text_a)
+        # print('example.block')
+        # print(example.block)
+        # print(tokens_a)
+        # segment_ids=[int(x) token in tokens_a]
+        # if example.block:
+        # print(tokens_a)
+        # segment_ids = [int(item) for item in example.block.split()]
+        # print(os.getcwd())
+        #         # # print('basbkdas')
+        # filepath=os.path.join(os.getcwd(),'../pytorch-pretrained-BERT/examples/impermissible.csv')
+        # print(filepath)
+        df = pd.read_csv('C:/Users/howar/Downloads/deceptive-attention-master/deceptive-attention-master/src/classification_tasks/pytorch-pretrained-BERT/examples/impermissible.csv')
+        # df = pd.read_csv('/home/lgpu0151/Howard/src/classification_tasks/pytorch-pretrained-BERT/examples/impermissible.csv')
 
-        if example.block:
-            #segment_ids = [int(item) for item in example.block.split()]
-            pronoun_list = ["her", "his", "him", "she", "he", "herself", "himself", "hers", "mr", "mrs", "ms", "mr.", "mrs.", "ms."]
-            segment_ids = [1 if token.lower() in pronoun_list else 0 for token in tokens_a]
-        else:
-            segment_ids = [0]*len(tokens_a)
 
+        pronoun_list=df['0'].to_list()
+        #     pronoun_list = ["her", "his", "him", "she", "he", "herself", "himself", "hers", "mr", "mrs", "ms", "mr.", "mrs.", "ms."]
+        segment_ids = [1 if token.lower() in pronoun_list else 0 for token in tokens_a]
+        # else:
+        #     segment_ids = [0]*len(tokens_a)
+        # print(segment_ids)
         tokens_b = None
         if example.text_b:
             tokens_b = tokenizer.tokenize(example.text_b)
@@ -385,6 +406,7 @@ def attention_regularization_loss(attention_probs_layers,
     reg_attention_sum = torch.sum(reg_attention_maps, -1)
     pad_attention_sum = torch.sum(pad_attention_maps, -1)
     non_reg_attention_sum = torch.sum(non_reg_attention_maps, -1)
+    total_attention_sum=torch.sum(attention_probs_layer, -1)
 
     if optimize_func == 'mean':
         hammer_reg = torch.mean( torch.log(1 - reg_attention_sum) )
@@ -392,9 +414,7 @@ def attention_regularization_loss(attention_probs_layers,
         # minimize max attention_sum
         # minimize min log(1 - attention_sum)
         hammer_reg = torch.min( torch.log(1 - reg_attention_sum) )
-
-    return - hammer_coeff * hammer_reg, torch.mean(reg_attention_sum), torch.mean(non_reg_attention_sum), torch.mean(pad_attention_sum), torch.max(reg_attention_sum)
-
+    return - hammer_coeff * hammer_reg, torch.mean(reg_attention_sum), torch.mean(non_reg_attention_sum),reg_attention_sum, torch.mean(pad_attention_sum), torch.max(reg_attention_sum), torch.max(non_reg_attention_sum), torch.argmax(non_reg_attention_sum, dim=1)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -611,7 +631,7 @@ def main():
     elif n_gpu > 1:
         model = torch.nn.DataParallel(model)
 
-    # Prepare optimizer
+    # Prepare optimizerb
     param_optimizer = list(model.named_parameters())
     no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
     optimizer_grouped_parameters = [
@@ -689,7 +709,8 @@ def main():
                     # print(label_ids)
                     # # print(logits)
                     loss =loss_fct(logits, label_ids)
-
+                    # print('attetnion prob layer')
+                    # print(attention_probs_layers)
                     # loss = loss_fct(logits.view(-1, num_labels), label_ids.view(-1))
                     loss += attention_regularization_loss(attention_probs_layers, 
                                                             category_mask,
@@ -794,9 +815,11 @@ def run_evaluation(args, processor, label_list, tokenizer, output_mode, epoch,
         ar_eval_loss = 0
         nb_eval_steps = 0
         preds = []
-
+        attmaxidx=[]
+        tms=[]
         tmp_avg_attention_mass = 0.0
         tmp_max_attention_mass = 0.0
+        tmp_max_attention_mass_non_reg = 0.0
         tmp_non_reg_mass = 0.0
         tmp_pad_mass = 0.0
 
@@ -820,13 +843,13 @@ def run_evaluation(args, processor, label_list, tokenizer, output_mode, epoch,
             loss_fct = CrossEntropyLoss() # averages the loss over B
             tmp_ce_eval_loss = loss_fct(logits.view(-1, num_labels), label_ids.view(-1))
 
-            tmp_ar_eval_loss, avg_attention_mass, non_reg_mass, pad_mass, max_attention_mass = \
+            tmp_ar_eval_loss, avg_attention_mass, non_reg_mass,total_mass, pad_mass, max_attention_mass,max_non_reg_mass,idxmaxloss = \
                 attention_regularization_loss(attention_probs_layers, 
                                                 category_mask,
                                                 input_mask,
                                                 args.hammer_coeff,
                                                 optimize_func=args.att_opt_func)
-
+            tmp_max_attention_mass_non_reg += max_non_reg_mass.item()
             tmp_avg_attention_mass += avg_attention_mass.item()
             tmp_max_attention_mass += max_attention_mass.item()
             tmp_non_reg_mass += non_reg_mass.item()
@@ -839,6 +862,10 @@ def run_evaluation(args, processor, label_list, tokenizer, output_mode, epoch,
             eval_loss += tmp_eval_loss.mean().item()
             ce_eval_loss += tmp_ce_eval_loss.mean().item()
             ar_eval_loss += tmp_ar_eval_loss.mean().item()
+            attmaxidx.append(non_reg_mass.item())
+            print('reg attention sum per layer')
+            print(total_mass)
+            tms.append(total_mass)
 
             nb_eval_steps += 1
             if len(preds) == 0:
@@ -852,7 +879,10 @@ def run_evaluation(args, processor, label_list, tokenizer, output_mode, epoch,
         eval_loss = eval_loss / nb_eval_steps
         ce_eval_loss = ce_eval_loss / nb_eval_steps
         ar_eval_loss = ar_eval_loss / nb_eval_steps
-
+        print('attetnion')
+        print(pd.Series(attmaxidx).describe())
+        # print(pd.Series(tms).describe())
+        # print(attmaxidx)
         preds = preds[0]
         preds = np.argmax(preds, axis=1)
         result = compute_metrics(input_processor_type, preds, all_label_ids.numpy())
@@ -869,17 +899,18 @@ def run_evaluation(args, processor, label_list, tokenizer, output_mode, epoch,
         result['avg_max_attention_mass'] = tmp_max_attention_mass / nb_eval_steps
         result['avg_non_reg_attention_mass'] = tmp_non_reg_mass / nb_eval_steps
         result['avg_pad_attention_mass'] = tmp_pad_mass / nb_eval_steps
-
+        result['avg_max_attention_mass_non_reg'] =tmp_max_attention_mass_non_reg / nb_eval_steps
         result['avg_mean_value_norm'] = tmp_vnfs[0]*1. / nb_eval_steps
         result['avg_max_value_norm'] = tmp_vnfs[1]*1. / nb_eval_steps
         result['avg_min_value_norm'] = tmp_vnfs[2]*1. / nb_eval_steps
+        result['attmaxidx']=attmaxidx
 
         result['label_match_score'] = 0.0
         if not args.first_run:
             num_labels = len(preds)
             result['label_match_score'] = simple_accuracy(preds, base_labels[typ][0:num_labels])
 
-        output_eval_file = os.path.join(args.output_dir, typ + "_results.txt")
+        output_eval_file = os.path.join(args.output_dir, typ+ "_"+str(args.seed) + "_"+str(epoch)+"_results.txt")
         with open(output_eval_file, "w") as writer:
             logger.info("***** {} results *****".format(typ))
             for key in sorted(result.keys()):
@@ -889,15 +920,18 @@ def run_evaluation(args, processor, label_list, tokenizer, output_mode, epoch,
         print('\t'.join([ str(elem) for elem in 
                         [typ, 
                         epoch, 
-                        result['acc'], 
+                        result['acc'],
+                        # result['f1'],
                         result['avg_mean_attention_mass'],
                         result['avg_max_attention_mass'],
-                        result['eval_loss'], 
+                        result['avg_max_attention_mass_non_reg'],
+                        result['eval_loss'],
                         result['ar_eval_loss'],
                         result['label_match_score'],
                         result['avg_mean_value_norm'], 
                         result['avg_max_value_norm'], 
-                        result['avg_min_value_norm'] 
+                        result['avg_min_value_norm'] ,
+                        result['attmaxidx']
                     ]]))
         
         return preds
