@@ -9,7 +9,7 @@ Logging module can be found here https://github.com/danishpruthi/log
 Common errors:
 When running bash files , unbuffer may not be found, you can run bash files without this
 Similarly the command python3.6 may need to be replaced with just python.
-No one results.ipynb was provided as the extent of the experiment was so large. Instead we've split up the paper as follows for easier interpretability.
+# No singular results notebeook was provided as the extent of the experiment was so large. Instead we've split up the paper as follows for easier interpretability.
 
 ## Classification Tasks
 
