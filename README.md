@@ -12,7 +12,7 @@ Similarly the command python3.6 may need to be replaced with just python.
 # No singular results notebook was provided as the extent of the experiment was so large. Instead we have split up the paper as follows for easier interpretability.
 
 ## Classification Tasks
-In order to reproduce the results of classification tasks from the report, run the notebook ('LogFiles.ipynb') in 'deceptive-attention-master_fact_ai/deceptive-attention-master/src/classification_tasks/' to import results. The functions used in LogFiles.ipynb can be found in 'classification_tasks.py'
+In order to reproduce the results of classification tasks from the report, run the notebook ('LogFiles.ipynb') in 'deceptive-attention-master_fact_ai/deceptive-attention-master/src/classification_tasks/' to import results. The functions used in 'LogFiles.ipynb' can be found in 'classification_tasks.py'
 
 
 Use 'Run_Classification_Task.ipynb' to train models and reproduce results.
