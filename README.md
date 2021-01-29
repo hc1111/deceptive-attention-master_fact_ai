@@ -9,9 +9,10 @@ Logging module can be found here https://github.com/danishpruthi/log
 Common errors:
 When running bash files , unbuffer may not be found, you can run bash files without this
 Similarly the command python3.6 may need to be replaced with just python.
-# No singular results notebook was provided as the extent of the experiment was so large. Instead we've split up the paper as follows for easier interpretability.
+# No singular results notebook was provided as the extent of the experiment was so large. Instead we have split up the paper as follows for easier interpretability.
 
 ## Classification Tasks
+In order to reproduce the results of classification tasks from the report, run the notebook (LogFiles.ipynb) in deceptive-attention-master_fact_ai/deceptive-attention-master/src/classification_tasks/. Here you have the option to either import all the results to simply import the table, or train the model yourself.
 
 ## Sequence to Sequence Tasks
 To produce the tables of the sequence to sequence tasks from the log files open deceptive-attention-master_fact_ai/deceptive-attention-master/src/seq2seq_tasks/Check_Logs.ipynb . Here test runs of the code can also be performed.
