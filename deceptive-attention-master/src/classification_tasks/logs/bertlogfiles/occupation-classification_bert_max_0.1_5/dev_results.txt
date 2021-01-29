@@ -1,0 +1,14 @@
+acc = 0.9741961095672886
+ar_eval_loss = 7.5374950895257785e-06
+avg_max_attention_mass = 7.536983879011435e-05
+avg_max_value_norm = 0.04656615405092163
+avg_mean_attention_mass = 9.490225267423768e-06
+avg_mean_value_norm = 0.039103541440433924
+avg_min_value_norm = 0.031382096180367094
+avg_non_reg_attention_mass = 0.9999905275920081
+avg_pad_attention_mass = 0.0
+ce_eval_loss = 0.08956627670226486
+eval_loss = 0.0895738148383518
+global_step = 4408
+label_match_score = 0.0
+loss = 0.0012420942207971995
