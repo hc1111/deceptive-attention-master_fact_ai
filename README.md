@@ -2,6 +2,8 @@
 
 Github for FACT_AI course 2020.
 
+This github is a larger download , primarily as the models for the sequence tasks are included.
+
 ## To Reproduce Report
 
 Install environment as specified https://github.com/danishpruthi/deceptive-attention
