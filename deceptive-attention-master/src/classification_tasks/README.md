@@ -17,10 +17,9 @@ To run for the 3 tasks, using `Embedding+Attention` and `BiLSTM+Attention` model
 
 Once the runs complete, you should be able to check the last few lines of the log files and find statistics like the following (for bigram-flip task, seed=1)
 
-```
-Final Test Accuracy ..........  100.00
-Final Test Attention Mass ....  93.34
-Convergence time in seconds ..  478.60
-Sample efficiency in epochs ..  3
-```
+
+### Extension 
+
+To run extension model, run cells in YELP notebook.ipynb, and make sure locations of files in cell 1 are correct.
+The YELP results notebook.ipynb helps parse the output to give the results as seen in the report
 
